@@ -4,6 +4,7 @@ project(depth_segmentation)
 add_definitions(-std=c++14)
 
 find_package(catkin_simple REQUIRED)
+find_package(OpenCV)
 
 if(APPLE)
   catkin_simple()
@@ -57,11 +58,13 @@ if (WITH_MASKRCNNROS)
   endif()
 endif()
 
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 
 cs_add_library(${PROJECT_NAME}
   src/depth_segmentation.cpp
 )
-target_link_libraries(${PROJECT_NAME} ${OpenMP_LIBS})
+target_link_libraries(${PROJECT_NAME} ${OpenMP_LIBS} ${OpenCV_LIBRARIES})
 target_compile_options(${PROJECT_NAME} PRIVATE ${OpenMP_FLAGS})
 
 
